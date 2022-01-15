@@ -1,5 +1,5 @@
 // import db info
-const {client} = require('./index.js'); // consider using pools???
+const {pool} = require('./index.js'); // consider using pools???
 
 
 const controllers = {
@@ -14,7 +14,7 @@ const controllers = {
     // fetch 5 products by default
     let count = req.query.count || 5;
 
-    client.query(`SELECT * FROM products LIMIT ${count};`, (err, dbRes) => {
+    pool.query(`SELECT * FROM products LIMIT ${count};`, (err, dbRes) => {
       if (err) {
         console.log('there was an error in getAllProducts db query');
         res.status(400).send(err);
@@ -31,14 +31,14 @@ const controllers = {
     let {product_id} = req.params;
 
     // first query gets the product info
-    client
+    pool
       .query(`SELECT * FROM products WHERE id = ${product_id};`)
       .then( ({rows}) => {
 
         let productData = rows[0];
 
         // second query gets the feature info, combines into single obj, and returns it
-        client
+        pool
           .query(`SELECT feature, value FROM features WHERE product_id = ${product_id}`)
           .then( ({rows}) => {
             productData.features = rows;
@@ -65,7 +65,7 @@ const controllers = {
     let queryArgs = [product_id];
 
     // first query gathers all style info from styles table
-    client
+    pool
       .query(queryString, queryArgs)
       .then( ({rows}) => {
 
@@ -83,11 +83,9 @@ const controllers = {
         queryArgs = [productStyleIdsList];
 
         // second query gathers photo data for all styles
-        client
+        pool
           .query(queryString, queryArgs)
           .then( ({rows}) => {
-
-            console.log('successful second query');
 
             // iterate through array of style objects
             for (let i = 0; i < returnObj.results.length; i++) {
@@ -112,12 +110,9 @@ const controllers = {
             queryArgs = [productStyleIdsList];
 
             // third query gathers sku data for all styles
-            client
+            pool
               .query(queryString, queryArgs)
               .then( ({rows}) => {
-
-                console.log('successful third query');
-                // console.log(rows);
 
                 // iterate through array of style objects
                 for (let i = 0; i < returnObj.results.length; i++) {
@@ -171,7 +166,7 @@ const controllers = {
     let queryString = `SELECT (json_agg(related_product_id)) FROM related WHERE current_product_id = $1;`;
     let queryArgs = [product_id];
 
-    client.query(queryString, queryArgs, (err, dbRes) => {
+    pool.query(queryString, queryArgs, (err, dbRes) => {
       if (err) {
         console.log('there was an error in getRelatedProducts db query');
         res.status(400).send(err);
