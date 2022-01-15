@@ -145,19 +145,19 @@ const controllers = {
 
               })
               .catch( (err) => {
-                console.log('error in third query');
+                console.log('error in getProductStyles third query');
                 res.status(400).send(err);
               });
 
           })
           .catch( (err) => {
-            console.log('error in second query');
+            console.log('error in getProductStyles second query');
             res.status(400).send(err);
           });
 
       })
       .catch( (err) => {
-        console.log('error in first query');
+        console.log('error in getProductStyles first query');
         res.status(400).send(err);
       });
 
