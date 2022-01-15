@@ -35,7 +35,7 @@ ALTER TABLE styles ADD CONSTRAINT styles_pkey PRIMARY KEY (id);
 CREATE TABLE features (
  id BIGSERIAL,
  product_id INTEGER,
- name TEXT,
+ feature TEXT,
  value TEXT
 );
 
