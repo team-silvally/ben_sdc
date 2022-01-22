@@ -2,7 +2,7 @@
 const express = require('express');
 const Axios = require('axios');
 const path = require('path');
-const {TOKEN, URL} = require('../config.js');
+// const {TOKEN, URL} = require('../config.js');
 const {controllers} = require('../database/controllers.js');
 
 var app = express();
@@ -10,18 +10,19 @@ var app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-let config = {
-  headers: {
-  'Authorization': TOKEN,
-  'Content-Type': 'application/json'
-  }
-}
+// let config = {
+//   headers: {
+//   'Authorization': TOKEN,
+//   'Content-Type': 'application/json'
+//   }
+// }
 
 // product endpoints
 app.get('/products', (req, res) => { controllers.getAllProducts(req, res); });
 app.get('/products/:product_id', (req, res) => { controllers.getProductById(req, res); });
 app.get('/products/:product_id/styles', (req, res) => { controllers.getProductStyles(req, res); });
 app.get('/products/:product_id/related', (req, res) => { controllers.getRelatedProducts(req, res); });
+app.get('/products/test/load_balancer', (req, res) => { res.status(200).send('server_1')});
 
 
 
