@@ -1,5 +1,5 @@
-const numberOfUsers = 1000;
-const mainIpAddress = '52.91.200.22';
+const numberOfUsers = 100;
+const mainIpAddress = '34.238.153.247';
 
 
 module.exports.numberOfUsers = numberOfUsers;

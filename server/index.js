@@ -22,7 +22,12 @@ app.get('/products', (req, res) => { controllers.getAllProducts(req, res); });
 app.get('/products/:product_id', (req, res) => { controllers.getProductById(req, res); });
 app.get('/products/:product_id/styles', (req, res) => { controllers.getProductStyles(req, res); });
 app.get('/products/:product_id/related', (req, res) => { controllers.getRelatedProducts(req, res); });
+
+// endpoint to check load balancer
 app.get('/products/test/load_balancer', (req, res) => { res.status(200).send('server_1')});
+
+// loader.io endpoint (for load testing)
+app.get('/loaderio-c3429f7240c40ad2d84698a67f2f0472/', (req, res) => { res.status(200).send('loaderio-c3429f7240c40ad2d84698a67f2f0472')});
 
 
 
